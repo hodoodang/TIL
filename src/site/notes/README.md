@@ -20,4 +20,4 @@ Today I Learned
 ## Frontend
 
 ## Etc
-- [[옵시디언(Obsidian) 기본 사용법, 세팅|옵시디언(Obsidian) 기본 사용법, 세팅]]
+- [[Obsidian|Obsidian]]
