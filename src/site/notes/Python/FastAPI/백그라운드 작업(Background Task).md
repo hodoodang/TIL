@@ -22,6 +22,7 @@ response를 전달한 후 실행할 백그라운드 작업을 만들 수 있습�
 
 ## `BackgroundTasks` 사용하기
 다음과 같이 `BackgoundTasks`를 추가 및 선언하고, 작업을 추가하여 사용합니다.
+
 ```python
 from fastapi import BackgroundTasks, FastAPI
 
