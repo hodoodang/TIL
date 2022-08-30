@@ -31,5 +31,7 @@ def get_urls(url: str, duration: int) -> List[str]:
 def call_get(url: str):
     return requests.get(url)
 ```
+
 이제는 실제 API를 호출하는 requests 함수를 작성합니다.
 
+FastAPI의 Test Code를 작성하는 방법은 [[Python/FastAPI/Test|여기]]에서 더 자세히 확인 하실 수 있습니다.
