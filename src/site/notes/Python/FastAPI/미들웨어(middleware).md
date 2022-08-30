@@ -68,3 +68,12 @@ request의 정보 중 메소드를 확인하고, content-type이 application/jso
 # Middleware
 
 # Advanced Middleware
+
+|    Name    | Type   | Default | Description                                                    |
+|:----------:|:------ |:------- |:-------------------------------------------------------------- |
+| returnType | String | 분리형  | 반환 형태를 지정("sentence" 이외의 값에 대해 모두 분리형 반환) |
+
+|   Name   | Type         | Description                                |
+|:--------:|:------------ |:------------------------------------------ |
+|   text   | String       | 형태소 분석할 문장                         |
+| morpheme | List[String] | 결과로 받을 형태소(빈 값인 경우 모두 출력) |
