@@ -21,6 +21,8 @@ tags: #Interview
 - HTTP/2의 특징은?
 	- HTTP 버전 별 발전 과정과 각각의 차이는?
 	- HTTP와 HTTPS의 차이점과 S의 의미는?
+- HTTP 프로토콜에서 GET과 POST Method의 차이점을 설명해 보세요
+- CORS 에러가 발생하는 이유가 뭐고, 해결 방법은 무엇인지 설명해 보세요
 - Firewall의 동작 원리는?
 - Docker와 Virtual Machine의 차이점은?
 - AMD와 Intel CPU의 차이점은?
