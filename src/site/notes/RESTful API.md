@@ -28,4 +28,12 @@ REST API는 다음 3가지 구성으로 이루어져 있다.
 ## 좋은 데이터베이스 설계에서부터 시작한다.
 - 엔티티 간의 반복적인 연결이나 사이클 형태의 연결이 이루어지 않도록 한다.
 - 엔티티에는 해당 엔티티에 관련된 데이터만 포함하며, 다른 엔티티와 종속적인 관계가 없어야 한다.
-- 새로운 디펜던시를 추가할 때 기존의 테이블을 크게 재작업 하지 않고, 안전하게 추가할 수 있어야 한다.
+- 새로운 디펜던시를 추가할 때, 기존의 테이블을 크게 재작업 하지 않고, 안전하게 추가할 수 있어야 한다.
+
+# Reference
+- https://dev.to/khalyomede/design-an-easy-to-use-and-flexible-rest-endpoints-3fia
+- https://meetup.toast.com/posts/92
+- https://ko.wikipedia.org/wiki/REST
+- https://aws.amazon.com/ko/what-is/restful-api/
+- https://www.redhat.com/ko/topics/integration/whats-the-difference-between-soap-rest
+- https://gmlwjd9405.github.io/2018/09/21/rest-and-restful.html
