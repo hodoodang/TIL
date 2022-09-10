@@ -220,7 +220,7 @@ Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflective
 ## 결론
 
 결론적으로 각 상황에 따라 다음 2가지 방법을 권장한다.
-- Static Inner 클래스 사용
+- static inner 클래스 사용
 - `enum` 클래스 사용
 
 ## 복습
