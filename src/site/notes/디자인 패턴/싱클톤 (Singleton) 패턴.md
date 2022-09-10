@@ -216,6 +216,7 @@ Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflective
 `enum`의 경우 기본적으로 `Serializable`를 구현하고 있어 직렬화를 지원한다. 그리고 역직렬화를 하는 경우에도 언제나 같은 동일한 객체를 반환한다.
 
 단, `enum`을 사용하는 경우 프로그램을 실행할 때 객체를 미리 생성해둔다는 단점이 있다.
+또한 상속을 사용하지 못한다는 단점이 있다.
 
 ## 결론
 
