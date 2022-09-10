@@ -35,7 +35,7 @@ public class Settings {
 ```java
 public class App {
 
-	public static class void main(String[] args) {
+	public static void main(String[] args) {
 		Settings settings = Settings.getInstance();
 		Settings settings1 = Settings.getInstance();
 		System.out.println(settings == settings1);
@@ -127,3 +127,105 @@ public class Settings {
 }
 ```
 
+## 싱글톤 패턴 구현 방범 깨트리기
+
+1. 리플렉션 사용
+
+```java
+public class App {
+
+	public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, InstantiationException {
+		Settings settings = Settings.getInstance();
+
+		Constructor<Settings> constructor = Settings.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		Settings settings1 = constructor.newInstance();
+
+		System.out.println(settings == settings1);
+	}
+}
+```
+
+2. 직렬화 & 역직렬화 사용
+
+```java
+public class Settings implements Serializable {  
+  
+    private Settings() {}  
+  
+    private static class SettingsHolder {  
+        private static final Settings INSTANCE = new Settings();  
+    }  
+  
+    public static Settings getInstance() {  
+        return SettingsHolder.INSTANCE;  
+    }  
+}
+```
+
+```java
+public class Application {  
+    public static void main(String[] args) throws IOException, ClassNotFoundException {  
+  
+        Settings settings = Settings.getInstance();  
+        Settings settings1 = null;  
+  
+        try (ObjectOutput out = new ObjectOutputStream(new FileOutputStream("settings.obj"))) {  
+            out.writeObject(settings);  
+        }  
+  
+        try (ObjectInput in = new ObjectInputStream(new FileInputStream("settings.obj"))) {  
+            settings1 = (Settings) in.readObject();  
+        }  
+          
+        System.out.println(settings == settings1);  
+    }  
+}
+```
+
+**역직렬화 대응 방안**
+
+```java
+protected Object readResolve() {  
+	return getInstance();  
+}  
+```
+
+역직렬화의 경우 내부적으로 `readResolve` 함수를 호출하여 `new Settings()`를 리턴하도록 동작한다.  `Settings` 클래스에 `readResolve` 함수를 오버라이딩을 하여 언제나 `getInstance()`를 리턴하도록 한다.
+
+이처럼 역직렬화의 경우 싱클톤 패턴을 깨뜨리는 것에 대한 방지가 가능하지만 리플렉션의 방법을 사용하는 경우에는 방지가 불가능하다.  
+(물론 리플렉션은 일반적으로 사용하는 방법이 아니며, 이렇게까지 싱글톤 패턴을 깨뜨리는 경우는 싱글톤 패턴을 사용하지 않겠다는 것과 마찬가지이다.)
+
+**리플렉션 & 역직렬화 대응 방안**
+
+리플렉션과 역직렬화 모두에 대해 대응할 수 있는 방법으로는 `enum`으로 Settings를 사용하는 방법이 있다.
+
+```java
+public enum Settings {  
+    INSTANCE;  
+}
+```
+
+이를 사용하면 리플렉션으로 강제로 newInstance를 사용하는 경우 다음과 같은 Exception을 일으킨다. 이는 리플렉션에서 자체적으로 `enum` 클래스의 newInstance를 막아두었기 때문이다.
+
+```sh
+Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflectively create enum objects
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:417)
+```
+
+`enum`의 경우 기본적으로 `Serializable`를 구현하고 있어 직렬화를 지원한다. 그리고 역직렬화를 하는 경우에도 언제나 같은 동일한 객체를 반환한다.
+
+단, `enum`을 사용하는 경우 프로그램을 실행할 때 객체를 미리 생성해둔다는 단점이 있다.
+
+## 결론
+
+결론적으로 각 상황에 따라 다음 2가지 방법을 권장한다.
+- Static Inner 클래스 사용
+- `enum` 클래스 사용
+
+## 복습
+
+- 자바에서 enum을 사용하지 않고 싱글톤 패턴을 구현하는 방법은?
+- private 생성자와 static 메소드를 사용하는 방법의 단점은?
+- enum을 사용해 싱글톤 패턴을 구현하는 방법의 장점과 단점은?
+- static inner 클래스를 사용해 싱글톤 패턴을 구현하라.
