@@ -230,3 +230,58 @@ Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflective
 - private 생성자와 static 메소드를 사용하는 방법의 단점은?
 - enum을 사용해 싱글톤 패턴을 구현하는 방법의 장점과 단점은?
 - static inner 클래스를 사용해 싱글톤 패턴을 구현하라.
+
+# 실무
+
+실제 자바 환경에서 내장된 기능 중 자바 어플리케이션 실행 환경에 대한 설정을 담당하는 `Runtime` 클래스가 이 싱글톤 패턴으로 구현되어 있다.
+
+## ex)
+```java
+public static void main(String[] args) {
+	Runtime runtime = Runtime.getRuntime();
+	System.out.println(runtime.maxMemory());
+	System.out.println(runtime.freeMemory());
+}
+```
+> 싱글톤 패턴으로 프로그래밍 되어 있기 때문에 `new` 키워드로는 생성할 수 없으며, `getRuntime()` 함수를 통해서만 객체를 가져올 수 있다.
+
+스프링 환경에서는 `ApplicationContext` 내부에서 빈으로 주입된 객체에 대해 싱글톤 스코프로 취급되며 사용한다.
+
+## ex)
+```java
+/*
+* SpringConfig.java
+*/
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SpringConfig {
+	public String hello() {
+		return "hello";
+	}
+}
+```
+
+```java
+/*
+* SpringExample.java
+*/
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class SpringExample {
+	public static void main(String[] args) {
+		ApplicationContext applicationContext = 
+		new AnnotationConfigApplicationContext(SpringConfig.class);
+
+		String hello = applicationContext.getBean("hello", String.class);
+		String hello2 = applicationContext.getBean("hello", String.class);
+		
+		System.out.println(hello == hello2)
+	}
+}
+```
+> Spring의 Bean Scope인 싱글톤 스코프는 싱글톤 패턴과는 엄밀하게 따지면 다르다.
+
+추가글: [[Java/자바와 스프링의 싱글톤|자바와 스프링의 싱글톤]]
